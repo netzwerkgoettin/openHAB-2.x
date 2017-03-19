@@ -1,0 +1,15 @@
+// Wetterstation.items / 20170319
+// Marianne M. Spiller <github@spiller.me>
+// openHAB 2.0 STABLE
+
+Number Wetter_Temperatur
+	"Außentemperatur [%.1f °C]"
+	<temperature>
+	(gWetterstation,gBadezimmer_1_Graph)
+	{ channel="homematic:HM-WDS10-TH-O:ccu2:MEQ1600130:1#TEMPERATURE" }
+
+Number Wetter_Luftfeuchtigkeit
+	"Luftfeuchtigkeit außen [%.1f %%]"
+	<humidity>
+	(gWetterstation,gBadezimmer_1_Graph)
+	{ channel="homematic:HM-WDS10-TH-O:ccu2:MEQ1600130:1#HUMIDITY" }

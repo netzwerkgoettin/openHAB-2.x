@@ -1,0 +1,19 @@
+// Wohnraum_0.items // 20170226
+// Marianne M. Spiller <github@spiller.me>
+// openHAB 2.0 STABLE
+
+Number Wohnraum_0_Heizung_SET_TEMPERATURE
+	"Temperatur Wohnraum [%.1f °C]"
+	<temperature>
+	(gWZ_ELW_Heizung, gHeizkoerper)
+	{ channel="homematic:HM-CC-RT-DN:ccu2:LEQ0902402:4#SET_TEMPERATURE" }
+Number Wohnraum_0_Heizung_ACTUALTEMP
+	"Temperatur Wohnraum ELW [%.1f °C]"
+	<temperature>
+	(gWZ_ELW_Heizung, gWZ_ELW)
+	{ channel="homematic:HM-CC-RT-DN:ccu2:LEQ0902402:4#ACTUAL_TEMPERATURE" }
+Number Wohnraum_0_Heizung_VALVE
+	"Ventil [%d %%]"
+	<heating>
+	(gWZ_ELW_Heizung, gWZ_ELW)
+	{ channel="homematic:HM-CC-RT-DN:ccu2:LEQ0902402:4#VALVE_STATE" }

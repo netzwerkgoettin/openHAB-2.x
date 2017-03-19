@@ -1,0 +1,87 @@
+// default.items // 20170319
+// Marianne M. Spiller <github@spiller.me>
+// openHAB 2.0 STABLE
+
+Group	gHaus
+
+//--------------------------------------------------------------------------------------------------------
+// Die Gewerke
+Group	gUG				"Keller"			<cellar>			(gHaus)
+Group	gEG				"Erdgeschoss"		<groundfloor>		(gHaus)
+Group	gOG1			"1. Obergeschoss"	<firstfloor>		(gHaus)
+Group	gOG2			"2. Obergeschoss"	<attic>				(gHaus)
+Group	gMisc			"Sonstige"			<garden>			(gHaus)
+
+//--------------------------------------------------------------------------------------------------------
+// gMisc // alle übrigen
+Group	gGarage			"Garage"			<garage>			(gMisc)
+Group	gGarten			"Garten"			<garden>			(gMisc)
+Group	gTreppenhaus	"Treppenhaus"		<corridor>			(gMisc)	
+
+//--------------------------------------------------------------------------------------------------------
+// gKeller // Räume im Keller
+Group	gWZ_ELW			"Wohnzimmer ELW"	<sofa>				(gUG)
+Group	gBad_ELW		"Badezimmer ELW"	<bath>				(gUG)
+Group	gWaschkeller	"Waschkeller"		<washingmachine>	(gUG)
+
+//--------------------------------------------------------------------------------------------------------
+// gEG // Räume im Erdgeschoss
+Group	gBad			"Badezimmer"		<bath>				(gEG)
+Group	gTerrasse		"Terrasse"			<terrace>			(gEG)
+Group	gSchlaZi_ELW	"Schlafzimmer ELW"	<bedroom>			(gEG)
+Group	gWintergarten	"Wintergarten"		<grass>				(gEG)
+
+//--------------------------------------------------------------------------------------------------------
+// gOG1 // Räume im 1. Stock
+Group	gWZ				"Wohnzimmer"		<sofa>				(gOG1)
+
+
+
+//--------------------------------------------------------------------------------------------------------
+// Kontrollgruppen für Aktoren
+//
+Group	gCTRL								"Control"
+Group	gSK									"Sicherungskasten"						(gCTRL)
+Group	gAnwesenheit						"Anwesenheit"			<present>		(gCTRL)
+
+Group:Switch:OR(ON, OFF)	gLampen			"Lampen im Haus [(%d)]"	<light>			(gCTRL)
+Group:Switch:OR(ON, OFF)	gTueren			"Türen [(%d)]"							(gCTRL)
+Group:Switch:OR(ON, OFF)	gFenster		"Fenster [(%d)]"						(gCTRL)
+Group:Switch:OR(ON, OFF)	gAlarm			"Alarm [(%d)]"			<siren>			(gCTRL)
+Group:Number:AVG			gHeizkoerper	"Heizkörper"							(gCTRL)
+//Group:Switch:OR(ON, OFF)	gFehler			"Fehler [(%d)]"			<erroricon>		(gCTRL)
+//Group:Switch:OR(ON, OFF)	gBatterie		"Batterie [(%d)]"		<batteryicon>	(gCTRL)
+
+//--------------------------------------------------------------------------------------------------------
+// Graphen
+//
+Group	gGraph					"Graphen"								<line>
+Group   gBadezimmer_1_Graph																	(gGraph)
+
+
+// Geräte in Räumen
+Group   gBad_WT					"Badezimmer Wandthermostat"
+Group   gBad_Fussbodenheizung	"Fußbodenheizung Badezimmer"			<heating>			(gHeizkoerper)
+Group   gBad_3fach				"Badezimmer 3-fach-Aktor"				<light>
+
+Group   gSK_HS_1				"Sicherungskasten 4fach-Aktor"								(gSK)
+Group   gSK_HS_2				"Sicherungskasten Dimmer Badezimmer"	<dimmablelight> 	(gSK)
+Group   gBad_6fach				"Badezimmer 6-fach Wandtaster"
+
+Group	gHeimkino				"Steuerung Heimkino"					<cinema>
+Group	gSteckdose1				"Funksteckdose Heimkino"				<poweroutlet-eu>
+Group	gJukebox				"Jukebox"								<siren>
+
+Group	gWZ_ELW_Heizung			"Heizung Wohnzimmer (ELW)"				<heating>			(gWZ_ELW,gHeizkoerper)
+Group   gBad_ELW_Heizung		"Heizung Badezimmer (ELW)"				<heating>			(gBad_ELW,gHeizkoerper)
+Group	gSchlaZi_ELW_Fenster	"Schlafzimmerfenster (ELW)"				<window>			(gSchlaZi_ELW,gFenster)
+Group	gSchlaZi_ELW_Heizung	"Heizung ELW Schlafzimmer"				<heating>			(gSchlaZi_ELW,gHeizkoerper)
+
+Group	gWetterstation			"Wetterstation Terrasse"				<temperature>		(gTerrasse)
+Group	gFernbedienung			"Fernbedienung"							<remote>
+
+//--------------------------------------------------------------------------------------------------------
+// Tests
+//
+Switch	TestSwitchItem
+Switch	Lueftertest	"Lueftertest"

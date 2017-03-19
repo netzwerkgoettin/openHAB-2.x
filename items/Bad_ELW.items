@@ -1,0 +1,21 @@
+// Bad_ELW.items // 20170319
+// Marianne M. Spiller <github@spiller.me>
+// openHAB 2.0 STABLE
+
+Number Badezimmer_0_Heizung_SET
+	"Temperatur Badezimmer ELW [%.1f °C]"
+	<temperature>
+	(gBad_ELW_Heizung)
+	{ channel="homematic:HM-CC-RT-DN:ccu2:LEQ1287006:4#SET_TEMPERATURE" }
+
+Number Badezimmer_0_Heizung_ACTUALTEMP
+	"Temperatur Badezimmer ELW [%.1f °C]"
+	<temperature>
+	(gBad_ELW_Heizung, gBad_ELW)
+	{ channel="homematic:HM-CC-RT-DN:ccu2:LEQ1287006:4#ACTUAL_TEMPERATURE" } 
+
+Number Badezimmer_0_Heizung_VALVE
+	"Ventil [%d %%]"
+	<heating>
+	(gBad_ELW_Heizung, gBad_ELW)
+	{ channel="homematic:HM-CC-RT-DN:ccu2:LEQ1287006:4#VALVE_STATE" }

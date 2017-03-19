@@ -1,0 +1,102 @@
+// Kodi.items // 20170319
+// Marianne M. Spiller <github@spiller.me>
+// openHAB 2.0 STABLE
+
+//-------------------------------------------------------------------------
+Switch Heimkino_Power
+	"Stromversorgung Heimkino"
+	<poweroutlet-eu>
+	(gSteckdose1, gHeimkino, gWZ)
+	{ channel="homematic:HM-LC-Sw1-Pl-2:ccu2:LEQ0476658:1#STATE" }
+	
+Switch Kodi_Mute
+	"Stumm"
+	(gHeimkino)
+	{ channel="kodi:kodi:3a50077b-65d1-042b-dae9-f2fe86de650a:mute" }
+	
+Dimmer Kodi_Volume
+	"Lautstärke"
+	(gHeimkino)
+	{ channel="kodi:kodi:3a50077b-65d1-042b-dae9-f2fe86de650a:volume" }
+
+Switch Kodi_Stop
+	"Stop"
+	(gHeimkino)
+	{ channel="kodi:kodi:3a50077b-65d1-042b-dae9-f2fe86de650a:stop" }
+	
+String Kodi_Title
+	"Gerade läuft... [%s]"
+	<television>
+	(gHeimkino)
+	{ channel="kodi:kodi:3a50077b-65d1-042b-dae9-f2fe86de650a:title" }
+	
+Player Kodi_Control
+	"Steuerung Heimkino [%s]"
+	<cinema>
+	(gHeimkino)
+	{ channel="kodi:kodi:3a50077b-65d1-042b-dae9-f2fe86de650a:control" }
+
+String Kodi_Mediatype
+	"Mediatyp [%s]"
+	(gHeimkino)
+	{ channel="kodi:kodi:3a50077b-65d1-042b-dae9-f2fe86de650a:mediatype" }
+	
+String Kodi_Artist
+	"Artist [%s]"
+	(gHeimkino)
+	{ channel="kodi:kodi:3a50077b-65d1-042b-dae9-f2fe86de650a:artist" }
+
+//-------------------------------------------------------------------------
+Color Fernsehleuchte_Farbe
+	"Farbe"
+	<colorwheel>
+	(gWZ)
+	{ channel="hue:0220:00178811c92e:1:color_temperature" }
+	
+Dimmer Fernsehleuchte_Dimmer
+	"Helligkeit"
+	(gWZ)
+	{ channel="hue:0220:00178811c92e:1:brightness" }
+	
+Switch Fernsehleuchte_Schalter
+	"Fernsehleuchte"
+	<light>
+	(gLampen)
+	{ channel="hue:0220:00178811c92e:1:switch" }
+
+/***		
+String Kodi_Showtitle
+	"Showtitel [%s]"
+	(gHeimkino)
+	{ channel="kodi:kodi:3a50077b-65d1-042b-dae9-f2fe86de650a:showtitle" }
+	
+String Kodi_Album
+	"Album [%s]"
+	(gHeimkino)
+	{ channel="kodi:kodi:3a50077b-65d1-042b-dae9-f2fe86de650a:album" }
+		
+String Kodi_Playuri
+	"PlayerURI [%s]"
+	(gHeimkino)
+	{ channel="kodi:kodi:3a50077b-65d1-042b-dae9-f2fe86de650a:playuri" }
+	
+String Kodi_Notification
+	"Benachrichtigung [%s]"
+	(gHeimkino)
+	{ channel="kodi:kodi:3a50077b-65d1-042b-dae9-f2fe86de650a:shownotification" }
+	
+String Kodi_Input
+	"Input [%s]"
+	(gHeimkino)
+	{ channel="kodi:kodi:3a50077b-65d1-042b-dae9-f2fe86de650a:input" }
+	
+String Kodi_Inputtext
+	"Inputtext [%s]"
+	(gHeimkino)
+	{ channel="kodi:kodi:3a50077b-65d1-042b-dae9-f2fe86de650a:inputtext" }
+	
+String Kodi_Systemcommand
+	"Systemcommand [%s]"
+	(gHeimkino)
+	{ channel="kodi:kodi:3a50077b-65d1-042b-dae9-f2fe86de650a:systemcommand" }
+ */

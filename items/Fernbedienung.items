@@ -1,0 +1,15 @@
+// Fernbedienung.items // 20170319
+// Marianne M. Spiller <github@spiller.me>
+// openHAB 2.0 STABLE
+
+Switch TP1_ON
+	"Taste 1"
+	<remote>
+	(gFernbedienung)
+	{ channel="homematic:HM-RC-4-3:ccu2:NEQ0156411:2#PRESS_SHORT" }
+	
+Switch TP1_OFF
+	"Taste 2"
+	<remote>
+	(gFernbedienung)
+	{ channel="homematic:HM-RC-4-3:ccu2:NEQ0156411:1#PRESS_SHORT" }

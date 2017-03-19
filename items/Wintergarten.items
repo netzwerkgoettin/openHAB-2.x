@@ -1,0 +1,19 @@
+// Wintergarten.items // 20170226
+// Marianne M. Spiller <github@spiller.me>
+// openHAB 2.0 STABLE
+
+Contact Contact_Terrassentuer
+  "Terrassentür [MAP(de.map):%s]"
+  <door>
+  (gWintergarten)
+  { channel="homematic:HM-Sec-SC-2:ccu2:LEQ0757986:1#STATE" } 
+
+Rollershutter Wintergarten_Fenster
+  "Jalousie Kippfenster"
+  (gWintergarten, gShutters)
+  { channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1561998:1#LEVEL" }
+		
+Rollershutter Wintergarten_Terrasse
+  "Jalousie Terrassentür"
+  (gWintergarten, gShutters)
+  { channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1565156:1#LEVEL" }

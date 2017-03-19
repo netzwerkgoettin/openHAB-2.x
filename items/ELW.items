@@ -1,0 +1,12 @@
+// Waschkeller.items // 20170319
+// Marianne M. Spiller <github@spiller.me>
+// openHAB 2.0 STABLE
+
+Contact Haustuer_Hinten
+	"Hintere Haustür [MAP(de.map):%s]"
+	<frontdoor>
+	(gELW, gTueren)
+	{ channel="homematic:HM-Sec-SC-2:ccu2:LEQ0501286:1#STATE" }
+
+// 0=OFF=NO_ERROR / 1=ON=SABOTAGE
+// Switch	Haustuer_Hinten_ERR	"Hintere Haustür  Sabotage"	{ homematic="address=LEQ0501286, channel=1, parameter=ERROR"}	

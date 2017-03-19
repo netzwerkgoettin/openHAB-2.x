@@ -1,0 +1,43 @@
+// Jukebox.items // 20170319
+// Marianne M. Spiller <github@spiller.me>
+// openHAB 2.0 STABLE
+
+//---------------------------------------------------------------------
+// Licht
+Switch AlarmLED
+ 	"Disko"
+	<siren>
+	(gJukebox, gWZ)
+	{ channel="homematic:HM-OU-CFM-Pl:ccu2:MEQ0065230:1#STATE" }
+Switch AlarmLED_Working
+	"Alarm LED Working"
+	(gJukebox)
+	{ channel="homematic:HM-OU-CFM-Pl:ccu2:MEQ0065230:1#WORKING" }
+Number AlarmLED_Ontime
+	"Alarm LED Ontime"
+	(gJukebox)
+	{ channel="homematic:HM-OU-CFM-Pl:ccu2:MEQ0065230:1#ON_TIME" }
+String AlarmLED_Submit
+	"Alarm LED Submit"
+	(gJukebox)
+	{ channel="homematic:HM-OU-CFM-Pl:ccu2:MEQ0065230:1#SUBMIT" }
+
+//---------------------------------------------------------------------
+// Sound
+Switch AlarmSound
+	"Klingel"
+	<siren>
+	(gJukebox, gWZ)
+	{ channel="homematic:HM-OU-CFM-Pl:ccu2:MEQ0065230:2#STATE" }
+Switch AlarmSound_Working
+	"Alarm Sound Working"
+	(gJukebox)
+	{ channel="homematic:HM-OU-CFM-Pl:ccu2:MEQ0065230:2#WORKING" }
+Number AlarmSound_Ontime
+	"Alarm Sound Ontime"
+	(gJukebox)
+	{ channel="homematic:HM-OU-CFM-Pl:ccu2:MEQ0065230:2#ON_TIME" }
+String AlarmSound_Submit
+	"Alarm Sound Submit"
+	(gJukebox)
+	{ channel="homematic:HM-OU-CFM-Pl:ccu2:MEQ0065230:2#SUBMIT" }

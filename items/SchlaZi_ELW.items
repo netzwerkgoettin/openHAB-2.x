@@ -1,0 +1,29 @@
+// SchlaZi_ELW.items // 20170319
+// Marianne M. Spiller <github@spiller.me>
+// openHAB 2.0 STABLE
+
+//--------------------------------------------------------------------------------
+// Fenster
+Contact Schlafzimmer_0_Fenster
+	"Fenster ELW Schlafzimmer [MAP(de.map):%s]"
+	<window>
+	(gSchlaZi_ELW,gSchlaZi_ELW_Fenster,gFenster)
+	{ channel="homematic:HM-Sec-SC-2:ccu2:LEQ0409512:1#STATE" }
+
+//--------------------------------------------------------------------------------
+// Heizung
+Number  Schlafzimmer_0_Heizung_SET
+	"Temperatur Schlafzimmer [%.1f °C]"
+	<temperature>
+	(gSchlaZi_ELW_Heizung)
+	{ channel="homematic:HM-CC-RT-DN:ccu2:LEQ1287010:4#SET_TEMPERATURE" }
+Number  Schlafzimmer_0_Heizung_ACTUALTEMP
+	"Temperatur ELW Schlafzimmer [%.1f °C]"
+	<temperature>
+	(gSchlaZi_ELW_Heizung,gSchlaZi_ELW)
+	{ channel="homematic:HM-CC-RT-DN:ccu2:LEQ1287010:4#ACTUAL_TEMPERATURE" }
+Number  Schlafzimmer_0_Heizung_VALVE
+	"Ventil [%d %%]"
+	<heating>
+	(gSchlaZi_ELW_Heizung,gSchlaZi_ELW)
+	{ channel="homematic:HM-CC-RT-DN:ccu2:LEQ1287010:4#VALVE_STATE" }

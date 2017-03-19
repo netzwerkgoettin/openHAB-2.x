@@ -1,0 +1,52 @@
+// Tageszeiten.items // 20170319
+// Marianne M. Spiller <github@spiller.me>
+// openHAB 2.0 STABLE
+
+DateTime Sonnenaufgang_Uhrzeit
+	"Sonnenaufgang [%1$tH:%1$tM]"
+	<sunrise>
+	{ channel="astro:sun:local:civilDawn#start" }
+DateTime Sonnenuntergang_Uhrzeit
+	"Sonnenuntergang [%1$tH:%1$tM]"
+	<sunset>
+	{ channel="astro:sun:local:civilDusk#start" }
+DateTime Mittagsstunde_Start
+	"Mittagsstunde [%1$tH:%1$tM]"
+	<sun>
+	{ channel="astro:sun:local:noon#start" }
+	
+Number Azimuth
+	"Azimut [%.2f]"
+	<sun>
+	(gWintergarten)
+	{ channel="astro:sun:local:position#azimuth" }
+Number Elevation
+	"Sonnenhöhe [%.2f]"
+	<sun>
+	(gWintergarten)
+	{ channel="astro:sun:local:position#elevation" }
+
+/***
+Number Strahlung_Total
+	"Strahlung"
+	{ channel="astro:sun:local:radiation#total" }
+Number Strahlung_Direct
+	"Strahlung"
+	{ channel="astro:sun:local:radiation#direct" }
+Number Strahlung_Diffuse
+	"Strahlung"
+	{ channel="astro:sun:local:radiation#diffuse" }
+DateTime Mittagsstunde_End
+	"Mittagsstunde [%1$tH:%1$tM]"
+	{ channel="astro:sun:local:noon#end" }
+DateTime Set
+	"Set [%1$tH:%1$tM]"
+	{ channel="astro:sun:local:set#start" }
+
+ * Switch		MDaemmerung_Civil
+ * Switch		MDaemmerung_Nautical
+ * Switch		MDaemmerung_Astronomical
+ * Switch		ADaemmerung_Civil
+ * Switch		ADaemmerung_Nautical
+ * Switch		ADaemmerung_Astronomical
+ ***/
