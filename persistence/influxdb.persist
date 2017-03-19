@@ -1,0 +1,27 @@
+// influxdb.persist // 20170226
+// Marianne M. Spiller <github@spiller.me>
+// openHAB 2.0 STABLE
+
+/***
+ * Note: if you want to graph the data too, you MUST store it at least once a minute.
+ * It doesn’t matter if your sensor data is even updated this quickly, you simply
+ * need to tell influxdb to store it once a minute. 
+ 
+ A cron expression takes the form of six or optionally seven fields:
+
+"Seconds / Minutes / Hours / Day-of-Month / Month / Day-of-Week / [Year (optional field)]"
+ 
+ ***/
+ 
+Strategies {
+        everyMinute		: "0 * * * * ?"
+//        everyMinute		: "0 0/1 * 1/1 * ? *"
+        everyHour       : "0 0 * * * ?"
+        everyDay        : "0 0 0 * * ?"
+        default 		= everyMinute
+}
+
+Items {
+	Badezimmer_1_Opt_Hum,Wetter_Temperatur,Wetter_Luftfeuchtigkeit,Badezimmer_1_WT_Temp,Badezimmer_1_WT_Hum : strategy = everyMinute
+//	* : strategy = everyChange, restoreOnStartup
+}

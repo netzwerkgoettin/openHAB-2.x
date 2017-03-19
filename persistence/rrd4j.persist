@@ -1,0 +1,20 @@
+// rrd4j.persist // 20170226
+// Marianne M. Spiller <github@spiller.me>
+// openHAB 2.0 STABLE
+
+/***
+ * Note: if you want to graph the data too, you MUST store it at least once a minute.
+ * It doesn’t matter if your sensor data is even updated this quickly, you simply
+ * need to tell rr4dj to store it once a minute. 
+ ***/
+ 
+ Strategies {
+        everyMinute		: "0 * * * * ?"
+        everyHour       : "0 0 * * * ?"
+        everyDay        : "0 0 0 * * ?"
+        default 		= everyMinute
+}
+
+Items {
+	* : strategy = everyChange, everyMinute, restoreOnStartup
+}
