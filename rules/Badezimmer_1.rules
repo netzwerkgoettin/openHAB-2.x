@@ -1,0 +1,31 @@
+// Badezimmer_1.rules // 20170319
+// Marianne M. Spiller <github@spiller.me>
+// openHAB 2.0 STABLE
+
+rule "Szenen-Beleuchtung Badezimmer_1"
+when
+	Item Badezimmer_1_Licht received command	
+then
+	switch(receivedCommand) {
+		case 0 : { // Putzlicht
+			Badezimmer_1_Deckenlicht.sendCommand(ON)
+			Badezimmer_1_Spiegellicht.sendCommand(ON)
+			Badezimmer_1_Wandlicht.sendCommand(0)
+		}
+		case 1 : { // Wellness
+			Badezimmer_1_Deckenlicht.sendCommand(OFF)
+			Badezimmer_1_Spiegellicht.sendCommand(OFF)
+			Badezimmer_1_Wandlicht.sendCommand(85)
+		}
+		case 2 : { // Normalbetrieb
+			Badezimmer_1_Deckenlicht.sendCommand(OFF)
+			Badezimmer_1_Spiegellicht.sendCommand(ON)
+			Badezimmer_1_Wandlicht.sendCommand(100)
+		}
+		case 3 : { // Alles aus
+			Badezimmer_1_Deckenlicht.sendCommand(OFF)
+			Badezimmer_1_Spiegellicht.sendCommand(OFF)
+			Badezimmer_1_Wandlicht.sendCommand(0)
+		}
+	}
+end

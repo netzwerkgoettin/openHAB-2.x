@@ -1,0 +1,48 @@
+// Kodie.rules // 20170319
+// Marianne M. Spiller <github@spiller.me>
+// openHAB 2.0 STABLE
+
+rule "Alles aus, wenn Mehrfachstecker aus"
+when
+	Item Heimkino_Power received command OFF
+then
+	// Dann ist auch die Fernsehleuchte aus
+	Fernsehleuchte_Schalter.postUpdate(OFF)
+end
+
+//------------------------------------------------------------------------
+rule "Etwas Licht, wenn Kodi unterbricht..."
+when
+	Item Kodi_Control changed to PAUSE
+	or Item Kodi_Control changed to STOP
+then
+	if (Fernsehleuchte_Schalter.state==OFF) {
+		Fernsehleuchte_Schalter.sendCommand(ON)
+	} else {
+		Fernsehleuchte_Schalter.postUpdate(ON)
+	}
+	logInfo("Kodi", "Licht an, Wiedergabe angehalten.")
+	var Number langsamAn = Fernsehleuchte_Dimmer.state as DecimalType
+	// logInfo("Kodi", "Aktueller Dimmer-Wert " + Fernsehleuchte_Dimmer.state)
+	while(langsamAn < 90) {
+		langsamAn=langsamAn+5
+		Fernsehleuchte_Dimmer.sendCommand(langsamAn)
+		Thread::sleep(500)
+	}
+end
+
+//------------------------------------------------------------------------
+rule "Licht fast aus, wenn Kodi läuft..."
+when
+	Item Kodi_Control changed to PLAY
+then
+	logInfo("Kodi", "Licht aus, Film geht weiter.")
+	Fernsehleuchte_Schalter.postUpdate(ON)
+	var Number langsamAus = Fernsehleuchte_Dimmer.state as DecimalType
+	// logInfo("Kodi", "Aktueller Dimmer-Wert " + Fernsehleuchte_Dimmer.state)
+	while(langsamAus > 20) {
+		langsamAus=langsamAus-5
+		Fernsehleuchte_Dimmer.sendCommand(langsamAus)
+		Thread::sleep(500)
+	}
+end

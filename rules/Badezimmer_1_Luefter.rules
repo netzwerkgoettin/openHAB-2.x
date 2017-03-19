@@ -1,0 +1,71 @@
+// Badezimmer_1_Luefter.rules // 20170319
+// Marianne M. Spiller <github@spiller.me>
+// openHAB 2.0 STABLE
+
+rule "Berechne Delta Luftfeuchtigkeit"
+when
+	// Produktivbetrieb: WHEN ITEM CHANGED
+	// Item Badezimmer_1_WT_Hum received update
+	Item Badezimmer_1_WT_Hum changed
+	or Item Lueftertest received command
+then
+	// Ziehe heran, wie weit der neue Wert vom Optimalwert abweicht
+	var Number Badezimmer_1_HUM_aktuell = Badezimmer_1_WT_Hum.state as DecimalType
+	var Number Aussen_HUM_aktuell = Wetter_Luftfeuchtigkeit.state as DecimalType
+	var Number Innentemperatur = Badezimmer_1_WT_Temp.state as DecimalType
+	var Number Aussentemperatur = Wetter_Temperatur.state as DecimalType
+
+	// Negative Aussentemperaturen abfangen, weil die nun wirklich alles verzerren :D
+	if (Aussentemperatur < 0) { Aussentemperatur = Aussentemperatur * -1 }
+	
+	if(Badezimmer_1_HUM_aktuell<35) {
+		logInfo("Badezimmer_1", "Luftfeuchtigkeit unbeachtet aller übrigen Werte okay.")
+	} else {
+		var Number Badezimmer_1_HUM_optimal = Aussen_HUM_aktuell - 3 * (Innentemperatur - Aussentemperatur)
+		logInfo("Badezimmer_1", "Die optimale Luftfeuchtigkeit läge bei {}", Badezimmer_1_HUM_optimal)
+		Badezimmer_1_Opt_Hum.postUpdate(Badezimmer_1_HUM_optimal)
+
+		/* Nun gilt es die 4% abzufangen die Quatsch sind */
+		if(Badezimmer_1_HUM_optimal<35) {
+			logInfo("Badezimmer_1", "Keine Lüfter-Aktion, da Optimalwert unrealistisch scheint.")
+		} else {
+			var Number Badezimmer_1_HUM_Abweichung = Badezimmer_1_HUM_aktuell - Badezimmer_1_HUM_optimal	
+			if(Badezimmer_1_HUM_Abweichung>10) {
+				if(Badezimmer_1_Luefter.state==OFF) {
+					// Die Luftfeuchtigkeit ist zu hoch im Vergleich zum Optimalwert
+					logInfo("Badezimmer_1", "Aktion laeuft an - Abweichung {}", Badezimmer_1_HUM_Abweichung)
+					Badezimmer_1_Luefter.sendCommand(ON)
+				}
+			} else {
+				logInfo("Badezimmer_1", "Keine Aktion - Abweichung {}", Badezimmer_1_HUM_Abweichung)
+				if (Badezimmer_1_Luefter.state==ON) {
+				Badezimmer_1_Luefter.sendCommand(OFF)
+				}
+			}
+		}	
+	}
+end
+
+rule "Luefter fuer fuenfzehn Minuten"
+when
+	Item Badezimmer_1_Luefter changed
+then
+	if (Badezimmer_1_Luefter.state==ON) {
+                createTimer(now.plusMinutes(15)) [|
+                        Badezimmer_1_Luefter.sendCommand(OFF)
+                ]
+        }
+end
+
+rule "Schalte Luefter ueber den Wandschalter"
+when
+	Item Badezimmer_1_6fach_4 received update ON
+then
+	logInfo("Badezimmer_1", "Status Luefter Badezimmer_1 {}", Badezimmer_1_Luefter.state)
+        if(Badezimmer_1_Luefter.state==ON) {
+                Badezimmer_1_Luefter.sendCommand(OFF)
+        } else {
+                Badezimmer_1_Luefter.sendCommand(ON)
+        }
+        logInfo("Badezimmer_1", "Schalte Luefter in Badezimmer_1 {}", Badezimmer_1_Luefter.state)
+end

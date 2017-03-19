@@ -1,0 +1,14 @@
+// Jukebox.rules // 20170319
+// Marianne M. Spiller <github@spiller.me>
+// openHAB 2.0 STABLE
+
+rule "Setze Farbspiel"
+when
+	Item TestSwitchItem changed
+then
+	var Jetzt = now.getHourOfDay
+	logInfo("hach", "Stunde {}", Jetzt)
+	if(Jetzt < 23) {
+		AlarmLED_Submit.sendCommand("1,1,108000,34,2,34,2,34,2,34,2,34,2")
+	}
+end

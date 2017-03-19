@@ -1,0 +1,20 @@
+// Fernbedienung.rules // 20170319
+// Marianne M. Spiller <github@spiller.me>
+// openHAB 2.0 STABLE
+
+rule "Alle Lichter im Haus an"
+when
+	Item TP1_ON changed to ON
+then
+	gLampen.sendCommand(ON)
+end
+
+
+
+
+rule "Alle Lichter im Haus ausschalten."
+when
+	Item TP1_OFF changed to ON
+then
+	gLampen.sendCommand(OFF)
+end

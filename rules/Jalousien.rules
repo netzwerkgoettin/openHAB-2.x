@@ -1,0 +1,30 @@
+// Jalousien.rules // 20170319
+// Marianne M. Spiller <github@spiller.me>
+// openHAB 2.0 STABLE
+
+rule "Dusk = Abenddämmerung - Jalousien ZU"
+when
+	Channel 'astro:sun:local:civilDusk#event' triggered START
+then
+	sendTelegram("unixe", "Gute Nacht! Die Jalousien fahren herunter.")
+	Wintergarten_Fenster.sendCommand(100)
+	Wintergarten_Terrasse.sendCommand(100)
+end
+
+rule "Dawn = Morgendämmerung - Jalousien AUF"
+when
+	Channel 'astro:sun:local:civilDawn#event' triggered START
+then
+	sendTelegram("unixe", "Guten Morgen! Die Jalousien fahren rauf.")
+	Wintergarten_Fenster.sendCommand(0)
+	Wintergarten_Terrasse.sendCommand(0)
+end
+
+rule "Tageslicht, Pflanzen schützen"
+when
+	Channel 'astro:sun:local:noon#event' triggered START
+then
+	sendTelegram("unixe", "Wintergarten meldet: Abdunklung zwecks Pflanzenschutz.")
+	Wintergarten_Fenster.sendCommand(60)
+	Wintergarten_Terrasse.sendCommand(10)
+end

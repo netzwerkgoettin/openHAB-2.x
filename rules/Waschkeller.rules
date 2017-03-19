@@ -1,0 +1,118 @@
+// Waschkeller.rules // 20170319
+// Marianne M. Spiller <github@spiller.me>
+// openHAB 2.0 STABLE
+
+var Number Var_WH
+// var Number ESSL_KWH=0.25
+var Timer tWaschmaschine = null
+
+//----------------------------------------------------------
+/***
+rule "Umrechnung  Wh <-> KWh"
+when
+  Item LM_Gesamtverbrauch changed
+then
+  Var_WH = LM_Gesamtverbrauch.state as DecimalType
+  var Number Var_KWH = Var_WH / 1000
+  LM_Gesamtverbrauch_KWH.postUpdate(Var_KWH)
+end
+***/
+
+/***
+//----------------------------------------------------------
+rule "Berechne Kosten Leistungsmesser"
+when 
+  Item LM_Gesamtverbrauch_KWH changed
+then
+  var Number Var_KWH = LM_Gesamtverbrauch_KWH.state as DecimalType
+  var Number Kosten = Var_KWH * ESSL_KWH
+  LM_Summe.postUpdate(Kosten)
+end
+ */
+
+rule "Setze maximale Leistung zurück"
+when
+	Item LM_Power received update ON
+then
+	LM_Maximal.postUpdate(0.00)
+end
+ 
+//----------------------------------------------------------
+rule "Maschine abschalten und benachrichtigen wenn fertig"
+when
+	Item LM_Leistung changed
+then
+	var Number Aktuelle_Leistung = LM_Leistung.state as DecimalType
+	var Number Maximale_Leistung = LM_Maximal.state as DecimalType
+	
+	if(LM_Power.state=="OFF") {
+		logInfo("Waschkeller", "Keine Aktion - Status Steckdose {}.", LM_Power.state)
+	} else {
+		// Wenn nichts über die Leitung geht ist nur der Stecker an, nicht aber die Maschine
+		if(Aktuelle_Leistung == 0.00) {
+			LM_Zustand.postUpdate("... ist aus!")
+		} else {
+			// Erstmal das Leistungsmaximum dieses Waschgangs ermitteln
+			if(Aktuelle_Leistung > Maximale_Leistung) {		
+				Maximale_Leistung = Aktuelle_Leistung
+				LM_Maximal.postUpdate(Maximale_Leistung)
+				logInfo("Waschkeller", "Maximale Leistung in diesem Waschgang: {}W.", Maximale_Leistung)
+			}
+			// Ist die maximale Leistung sehr niedrig? Dann Maschine vmtl. programmiert!
+			// => Dann muss auch ein evtl. vorhandener Timer entfernt werden!
+			if(Aktuelle_Leistung < 20.00) {
+				if(Maximale_Leistung < 50.00) {				
+					logInfo("Waschkeller", "Maschine ist programmiert und wartet auf Programmstart.")
+					LM_Zustand.postUpdate("... ist programmiert und wartet auf Programmstart!")
+					if(tWaschmaschine!=null) {
+						logInfo("Waschkeller", "Lösche Timer...")
+						tWaschmaschine.cancel
+						tWaschmaschine = null
+					}
+				} else {
+					// Bedeutet: Maximale_Leistung > 50.00, das Waschprogramm ist also zu Ende
+					if(tWaschmaschine!=null) {
+						logInfo("Waschkeller", "Timer läuft schon...")
+						LM_Zustand.postUpdate("... ist fertig, Timer läuft!")
+					} else {
+						logInfo("Waschkeller", "Setze nun Timer - auf 10min!")
+						tWaschmaschine = createTimer(now.plusSeconds(600)) [|
+							LM_Power.sendCommand(OFF)
+						]}
+					}
+				} else {
+					// Signifikante Leistungsaufnahme, die Waschmaschine läuft gerade
+					// Sollte ein Timer laufen, muss er raus, damit die Maschine sich nicht mitten im Programm abschaltet!
+					logInfo("Waschkeller", "Die Waschmaschine läuft, aktuelle Leistung " +Aktuelle_Leistung +"W.")
+					LM_Zustand.postUpdate("... läuft gerade!")
+					if(tWaschmaschine!=null) {
+						logInfo("Waschkeller", "Lösche Timer...")
+						tWaschmaschine.cancel
+						tWaschmaschine	 = null		
+				}
+			}
+		}		
+	}
+end
+
+
+//-----------------------------------------------------------------------------
+//
+rule "Kappe Stromversorgung Waschmaschine"
+when
+	Item LM_Power changed to OFF
+then
+	LM_Zustand.postUpdate("... ist aus!")
+	var Jetzt = now.getHourOfDay
+//	logInfo("Debug", "Stunde {}", Jetzt)
+	
+	if(Jetzt > 7) {
+		logInfo("Waschkeller", "Blinklicht starten.")
+		AlarmLED_Submit.sendCommand("1,1,108000,34,50,34,50,34,50,34,50,34,50")
+	}
+	
+	logInfo("Waschkeller", "Jetzt noch benachrichtigen.")
+	sendTelegram("unixe", "Waschkeller meldet: die Wäsche ist fertig!")
+	pushNotification("Waschkeller", "Die Waschmaschine ist fertig!")
+	
+end

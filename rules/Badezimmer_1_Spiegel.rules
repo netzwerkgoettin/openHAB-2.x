@@ -1,0 +1,16 @@
+// Badezimmer_1_Spiegel.rules // 20170319
+// Marianne M. Spiller <github@spiller.me>
+// openHAB 2.0 STABLE
+
+rule "Schalte Beleuchtung des Spiegels ueber den Wandschalter"
+when
+	Item Badezimmer_1_6fach_3 received update ON
+then
+	logInfo("Badezimmer_1", "Status Beleuchtung Spiegel Badezimmer_1 {}", Badezimmer_1_Spiegellicht.state)
+        if(Badezimmer_1_Spiegellicht.state==ON) {
+                Badezimmer_1_Spiegellicht.sendCommand(OFF)
+        } else {
+                Badezimmer_1_Spiegellicht.sendCommand(ON)
+        }
+        logInfo("Badezimmer_1", "Schalte Beleuchtung Spiegel in Badezimmer_1 {}", Badezimmer_1_Spiegellicht.state)
+end
