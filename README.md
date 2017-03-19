@@ -1,5 +1,5 @@
-openHAB2
-========
+openHAB 2.0.0
+=============
 
 What you see here is my new repository for openHAB 2.0.
 (The old openHAB repository still remains, but it's frozen).
