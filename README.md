@@ -5,7 +5,7 @@ What you see here is my new repository for openHAB 2.0.
 (The old openHAB repository still remains, but it's frozen).
 It corresponds quite often with [my blog] (https://www.unixe.de/tag/openhab-2/).
 
-![openHAB 2.0.0 Webinterface](doc/screenshots/openHAB_2.0.0.png)
+![openHAB 2.0.0 Webinterface](doc/screenshots/openHAB_2.0.0.jpg)
 
 Please keep in mind
 -------------------
