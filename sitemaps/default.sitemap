@@ -1,0 +1,54 @@
+// default.sitemap // 20170226
+// Marianne M. Spiller <github@spiller.me>
+// openHAB 2.0 STABLE
+
+sitemap default label="Willkommen zu Hause"
+{
+/***
+	Frame label="Tests" {
+		Switch item=TestSwitchItem
+//		Switch item=Lueftertest
+	}
+ */
+//	Die Stockwerke im Haus
+	Frame label="Gewerke" {
+		Group item=gUG
+		Group item=gEG
+		Group item=gOG1
+		Group item=gOG2
+//		Group item=gMisc => auskommentiert, da hier aktuell keine Aktoren sind
+	}
+
+	// Umgebungsvariablen, die nicht weiter beeinflussbar sind
+	Frame label="Meldungen" {
+		Text item=Sonnenuntergang_Uhrzeit
+		Text item=Sonnenaufgang_Uhrzeit
+		Text item=LM_Zustand visibility=[LM_Zustand=="ON"]
+		Text item=Wetter_Temperatur valuecolor=[>27="red",>14="green",>5="orange",<5="blue"]
+		Text item=Wetter_Luftfeuchtigkeit visibility=[Wetter_Luftfeuchtigkeit>10] valuecolor=[>75="red",>=60="orange",<60="green"]	
+		Text item=Badezimmer_1_WT_Hum visibility=[Badezimmer_1_WT_Hum>60] valuecolor=[>75="red",>=60="orange",<60="green"]
+		Text item=AlarmLED visibility=[AlarmLED=="ON"]
+		Text item=AlarmSound visibility=[AlarmSound=="ON"]
+		Text item=Contact_Terrassentuer visibility=[Contact_Terrassentuer=="OPEN"]
+		Text item=Schlafzimmer_0_Fenster visibility=[Schlafzimmer_0_Fenster=="OPEN"]
+		Text item=Haustuer_Hinten visibility=[Haustuer_Hinten=="OPEN"]
+		Text item=Badezimmer_1_Luefter visibility=[Badezimmer_1_Luefter=="ON"]
+	}
+
+	// Aktionen für die Bedienung von Gerätegruppen
+	Frame label="Aktionen" {
+		Switch item=gLampen mappings=[OFF="Alle ausschalten"] visibility=[gLampen=="ON"]
+		Switch item=Heimkino_Power mappings=[ON="Ein",OFF="Aus"]
+		Selection item=Kodi_Control mappings=[PLAY='Abspielen', PAUSE='Pause', NEXT='Nächstes Kapitel', PREVIOUS='Vorheriges Kapitel']
+	}
+
+	// Hier blende ich mit den Graphen fürs Badezimmer ein
+	Frame label="Graph Badezimmer 1" {
+		Switch item=gBadezimmer_1_Graph_Intervall label="Statistik" mappings=[0="Stunde", 1="Tag", 2="Woche", 3="Monat", 4="Jahr"]
+		Chart item=gBadezimmer_1_Graph period=h refresh=180000 visibility=[gBadezimmer_1_Graph_Intervall==0, gBadezimmer_1_Graph_Intervall=="Uninitialized"]
+		Chart item=gBadezimmer_1_Graph period=D refresh=180000 visibility=[gBadezimmer_1_Graph_Intervall==1]
+		Chart item=gBadezimmer_1_Graph period=W refresh=180000 visibility=[gBadezimmer_1_Graph_Intervall==2]
+		Chart item=gBadezimmer_1_Graph period=M refresh=180000 visibility=[gBadezimmer_1_Graph_Intervall==3]
+		Chart item=gBadezimmer_1_Graph period=Y refresh=180000 visibility=[gBadezimmer_1_Graph_Intervall==4]
+	}
+}
