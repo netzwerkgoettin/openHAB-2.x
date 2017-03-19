@@ -1,0 +1,22 @@
+// HM-CC-RT-DN.map // 20160213
+// Marianne M. Spiller <github@spiller.me>
+// Vgl. http://de.wikipedia.org/wiki/Jahreszeit#Meteorologische_Jahreszeiten
+// openHAB 2.0 STABLE
+
+// MODE
+AUTO-MODE=Automatik
+MANU-MODE=Manuelle Schaltung
+PARTY-MODE=Party-Modus
+BOOST-MODE=Boost
+
+// ERROR
+NO_FAULT=Kein Fehler
+VALVE_TIGHT=Ventil undicht
+ADJUSTING_RANGE_TOO_LARGE=ADJUSTING_RANGE_TOO_LARGE
+ADJUSTING_RANGE_TOO_SMALL=ADJUSTING_RANGE_TOO_SMALL
+COMMUNICATION_ERROR=Kommunikationsfehler
+LOWBAT=Bitte Batterie wechseln
+VALVE_ERROR_POSITION=Ventilposition
+
+// UNSET
+-=-Fehler bei der Initialisierung-

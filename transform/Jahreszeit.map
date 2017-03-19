@@ -1,0 +1,10 @@
+// Jahreszeit.map / 20160213
+// Marianne M. Spiller <github@spiller.me>
+// Vgl. http://de.wikipedia.org/wiki/Jahreszeit#Meteorologische_Jahreszeiten
+// openHAB 2.0 STABLE
+
+Spring=Frühling
+Summer=Sommer
+Autumn=Herbst
+Winter=Winter
+-=-Fehler bei der Initialisierung-
