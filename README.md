@@ -1,3 +1,5 @@
+*This repository is archived.*
+
 openHAB 2.0.0
 =============
 
